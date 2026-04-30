@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitamin AI — Get Started</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber: #ffb932;
+    --green: #3cbb88;
+    --purple: #7c5fe6;
+    --bg: #0a0e1a;
+    --text: #f0ede6;
+    --muted: rgba(240,237,230,0.5);
+    --card-bg: rgba(255,255,255,0.05);
+    --card-border: rgba(255,255,255,0.09);
+    --input-bg: rgba(255,255,255,0.07);
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  .bg-layer {
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(255,180,50,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 100%, rgba(60,200,140,0.14) 0%, transparent 55%),
+      #0a0e1a;
+    z-index: 0;
+  }
+
+  .orb {
+    position: fixed; border-radius: 50%; filter: blur(70px);
+    opacity: 0.32; animation: float 8s ease-in-out infinite; z-index: 0; pointer-events: none;
+  }
+  .orb1 { width:320px; height:320px; background:var(--amber); top:-80px; left:-80px; animation-delay:0s; }
+  .orb2 { width:240px; height:240px; background:var(--green); bottom:-60px; right:-40px; animation-delay:-3s; }
+  .orb3 { width:160px; height:160px; background:var(--purple); top:40%; left:62%; animation-delay:-5s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-24px) scale(1.05); }
+  }
+
+  .page {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 40px 24px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  /* Logo */
+  .logo {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:18px;
+    color:var(--text); display:flex; align-items:center; gap:7px; margin-bottom:36px;
+  }
+  .logo-dot { width:7px; height:7px; border-radius:50%; background:var(--amber); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.4);} }
+
+  /* Card */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 36px 32px;
+    width: 100%; max-width: 420px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Progress */
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-label {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom: 10px;
+  }
+  .progress-label span { font-size:12px; color:var(--muted); }
+  .progress-label .step-tag {
+    font-size:11px; font-weight:500; color:var(--amber);
+    background:rgba(255,185,50,0.12); border:1px solid rgba(255,185,50,0.25);
+    border-radius:100px; padding:3px 10px;
+  }
+  .progress-track {
+    width:100%; height:4px; background:rgba(255,255,255,0.1);
+    border-radius:100px; overflow:hidden;
+  }
+  .progress-fill {
+    height:4px; width:50%; background:var(--amber);
+    border-radius:100px; transition:width 0.6s ease;
+  }
+
+  /* Step headings */
+  .step-title {
+    font-family:'Syne',sans-serif; font-weight:700; font-size:22px;
+    color:var(--text); margin-bottom:6px;
+  }
+  .step-sub { font-size:13px; color:var(--muted); margin-bottom:24px; }
+
+  /* Inputs */
+  .field { margin-bottom:14px; }
+  .field label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; letter-spacing:0.3px; }
+  .field input, .field select {
+    width:100%; padding:12px 14px;
+    background:var(--input-bg);
+    border:1px solid var(--card-border);
+    border-radius:12px;
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    font-size:14px;
+    outline:none;
+    transition:border-color 0.2s, background 0.2s;
+    appearance:none; -webkit-appearance:none;
+  }
+  .field input::placeholder { color:rgba(240,237,230,0.3); }
+  .field input:focus, .field select:focus {
+    border-color:rgba(255,185,50,0.5);
+    background:rgba(255,185,50,0.05);
+  }
+  .field select option { background:#141929; color:var(--text); }
+
+  /* Buttons */
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    width:100%; padding:13px 24px;
+    background:var(--amber); color:#0a0e1a;
+    font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500;
+    border:none; border-radius:100px; cursor:pointer;
+    transition:transform 0.2s, box-shadow 0.2s;
+    text-decoration:none; margin-top:8px;
+  }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(255,185,50,0.35); }
+  .btn svg { transition:transform 0.2s; }
+  .btn:hover svg { transform:translateX(3px); }
+
+  .btn-outline {
+    background:transparent; color:var(--text);
+    border:1px solid var(--card-border);
+    margin-top:10px;
+  }
+  .btn-outline:hover { background:rgba(255,255,255,0.06); box-shadow:none; }
+
+  /* Divider */
+  .divider {
+    display:flex; align-items:center; gap:12px;
+    margin:20px 0; color:var(--muted); font-size:12px;
+  }
+  .divider::before, .divider::after {
+    content:''; flex:1; height:1px; background:var(--card-border);
+  }
+
+  /* Video */
+  .video-wrap {
+    width:100%; border-radius:14px; overflow:hidden;
+    border:1px solid var(--card-border); margin-bottom:12px; position:relative;
+  }
+  video { width:100%; display:block; border-radius:14px; }
+  .video-overlay {
+    position:absolute; inset:0; pointer-events:none;
+    border:2px solid rgba(255,185,50,0.3); border-radius:14px;
+  }
+  .corner { position:absolute; width:14px; height:14px; border-color:var(--amber); border-style:solid; opacity:0.7; }
+  .c-tl { top:8px; left:8px; border-width:2px 0 0 2px; }
+  .c-tr { top:8px; right:8px; border-width:2px 2px 0 0; }
+  .c-bl { bottom:8px; left:8px; border-width:0 0 2px 2px; }
+  .c-br { bottom:8px; right:8px; border-width:0 2px 2px 0; }
+
+  /* File input */
+  .file-label {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:28px 16px;
+    background:var(--input-bg);
+    border:1.5px dashed rgba(255,185,50,0.3);
+    border-radius:14px; cursor:pointer;
+    transition:border-color 0.2s, background 0.2s;
+    font-size:14px; color:var(--muted);
+  }
+  .file-label:hover { border-color:rgba(255,185,50,0.6); background:rgba(255,185,50,0.05); color:var(--text); }
+  .file-label svg { opacity:0.6; }
+  input[type="file"] { display:none; }
+
+  /* Loader */
+  #loader {
+    display:none; flex-direction:column;
+    align-items:center; justify-content:center; gap:20px;
+    text-align:center;
+  }
+  .spinner-ring {
+    width:54px; height:54px; border-radius:50%;
+    border:3px solid rgba(255,255,255,0.1);
+    border-top:3px solid var(--amber);
+    animation:spin 0.9s linear infinite;
+  }
+  @keyframes spin { 100%{ transform:rotate(360deg); } }
+  .loader-text { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; }
+  .loader-sub { font-size:13px; color:var(--muted); }
+  .dots::after {
+    content:''; animation:dots 1.5s steps(3,end) infinite;
+  }
+  @keyframes dots {
+    0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'}
+  }
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="page">
+  <div class="logo"><span class="logo-dot"></span> VitaminAI</div>
+
+  <div class="card">
+    <!-- Progress -->
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progress</span>
+        <span class="step-tag" id="stepTag">Step 1 of 2</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="bar"></div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div id="step1">
+      <p class="step-title">Patient Details</p>
+      <p class="step-sub">Tell us a little about yourself to personalize your report.</p>
+
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="e.g. Rahul Sharma">
+      </div>
+      <div class="field">
+        <label>Age</label>
+        <input type="number" id="age" placeholder="e.g. 28">
+      </div>
+      <div class="field">
+        <label>Gender</label>
+        <select id="gender">
+          <option value="">Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="nextStep()">
+        Continue
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#0a0e1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" style="display:none;">
+      <p class="step-title">Upload or Capture</p>
+      <p class="step-sub">Take a clear, well-lit photo of your face for accurate analysis.</p>
+
+      <!-- Upload form -->
+      <form action="/predict" method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+        <input type="hidden" name="name" id="name_field">
+        <input type="hidden" name="age" id="age_field">
+        <input type="hidden" name="gender" id="gender_field">
+
+        <label class="file-label" for="fileInput">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 13V4m0 0L7 7m3-3l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 14v1a2 2 0 002 2h10a2 2 0 002-2v-1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span id="fileLabel">Choose photo to upload</span>
+        </label>
+        <input type="file" name="image" id="fileInput" accept="image/*" required onchange="updateFileLabel(this)">
+
+        <button type="submit" class="btn" style="margin-top:14px;">
+          Upload & Analyze
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#0a0e1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+
+      <div class="divider">or use camera</div>
+
+      <!-- Camera -->
+      <div class="video-wrap">
+        <video id="video" autoplay playsinline></video>
+        <div class="video-overlay">
+          <div class="corner c-tl"></div>
+          <div class="corner c-tr"></div>
+          <div class="corner c-bl"></div>
+          <div class="corner c-br"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-outline" onclick="capture()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M1 6V5a2 2 0 012-2h1l1-1h6l1 1h1a2 2 0 012 2v7a2 2 0 01-2 2H3a2 2 0 01-2-2V6z" stroke="currentColor" stroke-width="1.3"/></svg>
+        Capture & Analyze
+      </button>
+
+      <canvas id="canvas" style="display:none;"></canvas>
+
+      <form id="cameraForm" action="/predict" method="POST">
+        <input type="hidden" name="image_data" id="image_data">
+        <input type="hidden" name="name" id="c_name">
+        <input type="hidden" name="age" id="c_age">
+        <input type="hidden" name="gender" id="c_gender">
+      </form>
+    </div>
+
+    <!-- LOADER -->
+    <div id="loader">
+      <div class="spinner-ring"></div>
+      <div>
+        <p class="loader-text">Analyzing your face<span class="dots"></span></p>
+        <p class="loader-sub">Our AI is detecting vitamin deficiencies</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function nextStep() {
+  const name = document.getElementById("name").value.trim();
+  const age = document.getElementById("age").value.trim();
+  const gender = document.getElementById("gender").value;
+
+  if (!name || !age || !gender) {
+    alert("Please fill in all details to continue.");
+    return;
+  }
+
+  ["name_field","c_name"].forEach(id => document.getElementById(id).value = name);
+  ["age_field","c_age"].forEach(id => document.getElementById(id).value = age);
+  ["gender_field","c_gender"].forEach(id => document.getElementById(id).value = gender);
+
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "block";
+  document.getElementById("bar").style.width = "100%";
+  document.getElementById("stepTag").textContent = "Step 2 of 2";
+
+  startCamera();
+}
+
+function startCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => { document.getElementById('video').srcObject = stream; })
+    .catch(() => alert("Please allow camera access to use this feature."));
+}
+
+function capture() {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const video = document.getElementById('video');
+  canvas.width = 300; canvas.height = 300;
+  ctx.drawImage(video, 0, 0, 300, 300);
+  document.getElementById('image_data').value = canvas.toDataURL('image/jpeg', 0.5);
+  showLoader();
+  document.getElementById('cameraForm').submit();
+}
+
+function showLoader() {
+  document.getElementById("step2").style.display = "none";
+  document.getElementById("loader").style.display = "flex";
+}
+
+function updateFileLabel(input) {
+  const label = document.getElementById("fileLabel");
+  label.textContent = input.files.length ? input.files[0].name : "Choose photo to upload";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Result</title>
+
+<style>
+body {
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg,#1d2b64,#f8cdda);
+    font-family:sans-serif;
+}
+
+.card {
+    background: rgba(255,255,255,0.15);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    backdrop-filter: blur(20px);
+    color:white;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    width:350px;
+}
+
+img {
+    width:200px;
+    border-radius:10px;
+    margin:15px;
+}
+
+.progress {
+    width:100%;
+    background:rgba(255,255,255,0.2);
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-bar {
+    height:10px;
+    background:#00c6ff;
+}
+
+.badge {
+    margin-top:10px;
+    padding:5px 10px;
+    border-radius:10px;
+}
+
+.high { background:green; }
+.medium { background:orange; }
+.low { background:red; }
+
+button {
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    background:#00c6ff;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>Result</h1>
+
+    <img src="{{ image_path }}">
+
+    <!-- BEST -->
+    <h2>Vitamin {{ best.vitamin }}</h2>
+    <h3>{{ best.confidence }}%</h3>
+
+    <div class="progress">
+        <div class="progress-bar" style="width: {{ best.confidence }}%"></div>
+    </div>
+
+    <div class="badge 
+        {% if level == 'High' %}high
+        {% elif level == 'Medium' %}medium
+        {% else %}low
+        {% endif %}
+    ">
+        {{ level }} Confidence
+    </div>
+
+    <!-- TOP 3 -->
+    <h4>Top Predictions</h4>
+    <ul>
+        {% for r in results %}
+        <li>Vitamin {{ r.vitamin }} - {{ r.confidence }}%</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ pdf_path }}">
+        <button>Download Report</button>
+    </a>
+
+</div>
+
+</body>
+</html>
