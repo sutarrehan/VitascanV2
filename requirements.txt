@@ -1,5 +1,0 @@
-flask
-tensorflow
-opencv-python
-numpy
-reportlab
